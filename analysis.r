@@ -80,7 +80,7 @@ expression_by_celltype
 ## Save the plot
 ### Show code for saving the plot with ggsave() or a similar function
 ggsave(
-  filename = "~/Desktop/BioInformatics/training-program-application-2026/results/expression_by_celltype_plot.png", 
+  filename = "~/Desktop/BioInformatics/training-program-application-2026/results/first10_gene_expression_by_celltype_plot.png", 
   plot = expression_by_celltype, 
   width = 8, height = 4
 )
