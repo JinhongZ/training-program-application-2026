@@ -24,8 +24,9 @@
 # Load data here ----------------------
 # Load each file with a meaningful variable name.
 setwd("~/Desktop/BioInformatics/training-program-application-2026/data/")
-metadata <- read.csv("GSE60450_filtered_metadata.csv")
-count_matrix <- read.csv("GSE60450_GeneLevel_Normalized(CPM.and.TMM)_data.csv")
+# set the first column as row names
+metadata <- read.csv("GSE60450_filtered_metadata.csv", row.names = 1)
+expression_data <- read.csv("GSE60450_GeneLevel_Normalized(CPM.and.TMM)_data.csv", row.names = 1)
 
 # Inspect the data -------------------------
 
@@ -33,10 +34,10 @@ count_matrix <- read.csv("GSE60450_GeneLevel_Normalized(CPM.and.TMM)_data.csv")
 # Keep the code here for each file.
 
 ## Expression data
-
+dim(expression_data) # 23735 rows and 13 columns
 
 ## Metadata
-
+dim(metadata) # 12 rows and 3 columns
 
 # Prepare/combine the data for plotting ------------------------
 # How can you combine this data into one data.frame?
