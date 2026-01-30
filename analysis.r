@@ -20,6 +20,9 @@
 # You may use base R or tidyverse for this exercise
 
 # ex. library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
 
 # Load data here ----------------------
 # Load each file with a meaningful variable name.
@@ -41,14 +44,43 @@ dim(metadata) # 12 rows and 3 columns
 
 # Prepare/combine the data for plotting ------------------------
 # How can you combine this data into one data.frame?
-
+# convert expression data to a long format
+expr_long <- expression_data %>% 
+  pivot_longer(
+    cols = -gene_symbol,
+    names_to = "sample_id",
+    values_to = "expression"
+  ) %>% 
+  mutate(celltype = metadata$immunophenotype[match(sample_id, rownames(metadata))])
 
 
 # Plot the data --------------------------
 ## Plot the expression by cell type
 ## Can use boxplot() or geom_boxplot() in ggplot2
-
+expression_by_celltype <- ggplot(
+  expr_long %>% filter(gene_symbol %in% expression_data$gene_symbol[1:10]), 
+  aes(x = gene_symbol, y = expression, fill = celltype)
+) +
+  geom_violin(trim = FALSE, scale = "width", adjust = 1) + 
+  geom_boxplot(
+    aes(group = interaction(gene_symbol, celltype)), 
+    width = 0.25, outlier.shape = NA, fill = "white", color = "black",
+    position = position_dodge(0.9)) + 
+  scale_y_continuous(n.breaks = 8) + 
+  theme_bw() +
+  labs(
+    x = "Gene",
+    y = "Expression level",
+    fill = "Cell population"
+  ) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+expression_by_celltype
 
 
 ## Save the plot
 ### Show code for saving the plot with ggsave() or a similar function
+ggsave(
+  filename = "~/Desktop/BioInformatics/training-program-application-2026/results/expression_by_celltype_plot.png", 
+  plot = expression_by_celltype, 
+  width = 8, height = 4
+)
