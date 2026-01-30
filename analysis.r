@@ -23,8 +23,9 @@
 
 # Load data here ----------------------
 # Load each file with a meaningful variable name.
-
-
+setwd("~/Desktop/BioInformatics/training-program-application-2026/data/")
+metadata <- read.csv("GSE60450_filtered_metadata.csv")
+count_matrix <- read.csv("GSE60450_GeneLevel_Normalized(CPM.and.TMM)_data.csv")
 
 # Inspect the data -------------------------
 
